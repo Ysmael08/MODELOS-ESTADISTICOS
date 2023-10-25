@@ -1,3 +1,5 @@
+#ESTE CODIGO ES UNA MODIFICACION DEL PRESENTADO EN EL CANAL DE YOUTUBE ANDRES FARALL
+
 # cargar paquete readxl
 library(readxl)
 #buscar la ruta del archivo de excel
@@ -19,8 +21,8 @@ partidos
 #borramos las filas que no tengan datos
 partidos <- na.omit(partidos[, c(1:5)])
 partidos
-#asignamos una fecha al modelo, puede ser hoy o mas adelante
-fechaModelo <-"2023-08-20" #sirve para ver la depresiacion temporal
+#asignamos una fecha para hacer la prediccion
+fechaModelo <-"2023-08-20" 
 #armamos un dataframe con todos los datos del modelo
 partidos.modelo <-data.frame(
   Ataque = as.factor(c(as.character(partidos$LOCAL), as.character(partidos$VISITANTE))),
@@ -52,14 +54,14 @@ if (valor_p < nivel_significancia) {
 }
 
 
-#probemos el modelo
-#cuantos goles mete en promedio equipo local
+#prueba del modelo
+#goles en promedio del equipo local
 datos_partido_ataca_West_Ham = data.frame(Ataque = 'West_Ham', Defensa = 'Chelsea')
 datos_partido_ataca_West_Ham
 lambda <- predict(modelo,datos_partido_ataca_West_Ham, type='response') #"response" nos devuelve el lambda y no el ajuste de la regresion
 lambda
 
-#cuantos goles mete en promedio equipo visitante
+#goles en promedio equipo visitante
 datos_partido_ataca_Chelsea= data.frame(Ataque='Chelsea', Defensa ='West_Ham')
 datos_partido_ataca_Chelsea
 mu <- predict(modelo,datos_partido_ataca_Chelsea, type='response') #"response" nos devuelve el lambda y no el ajuste de la regresion
@@ -68,7 +70,7 @@ mu
 maxgol <- 5 #Max cant goles
 
 #queremos devolver la probabilidad de cada resultado asumiendo que tienen distribucion Poisson
-#generamos una matrix con la probabilidad de que el partido termine con el resultado i-j
+#generamos una matrix con la probabilidad de que el partido termine con el resultado i-j, empezando desde el 0 goles
 
 resultados <- dpois(0:maxgol, mu) %*% t(dpois(0:maxgol, lambda))
 resultados*100
@@ -98,6 +100,8 @@ probganarvisitante <- resultados[2,1] +
   resultados[4,1] + resultados[4,2] + resultados[4,3] +
   resultados[5,1] + resultados[5,2] + resultados[5,3] + resultados [5,4] +
   resultados[6,1] + resultados[6,2] + resultados[6,3] + resultados [6,4] + resultados [6,5]
+
+#se calcula la probabilidad de ganar tanto del visitante y del local, ademas se calcula la cuota de apuesta
 probganarlocal * 100; 1/probganarlocal
 probganarvisitante *100; 1/probganarvisitante
 
