@@ -5,11 +5,11 @@ library(readxl)
 #buscar la ruta del archivo de excel
 file.choose()
 # copiar ruta de la consola y guardar en variable
-ruta_excel <- "C:\\Users\\Walter\\Desktop\\MODELOS ESTADISTICOS\\PREDICCION DEPORTES\\BD.xlsx"
+ruta_excel <- "C:\\.......\\....\\.......\\........\\.......\\....xlsx"
 # mirar las hojas del excel
 excel_sheets(ruta_excel)
 #cargar la base de datos
-partidos <- read_excel(ruta_excel, sheet= 'PREMIER_LEAGUE')
+partidos <- read_excel(ruta_excel, sheet= '......')
 partidos
 
 #dejamos los datos de columnas que nos importan
@@ -101,7 +101,15 @@ probganarvisitante <- resultados[2,1] +
   resultados[5,1] + resultados[5,2] + resultados[5,3] + resultados [5,4] +
   resultados[6,1] + resultados[6,2] + resultados[6,3] + resultados [6,4] + resultados [6,5]
 
-#se calcula la probabilidad de ganar tanto del visitante y del local, ademas se calcula la cuota de apuesta
-probganarlocal * 100; 1/probganarlocal
-probganarvisitante *100; 1/probganarvisitante
+# detalles del reporte
+cat("Para el partido entre", ataque, "y", defensa, "se estima que local en promedio marcara", round(lambda, 2), "goles.\n")
+cat("Para el partido entre", ataque, "y", defensa, "se estima que visitante en promedio marcara", round(mu, 2), "goles.\n")
+cat("Probabilidad de ganar para", ataque, ":", probganarlocal * 100, "%", "y su cuota calculada es", 1/probganarlocal,"\n")
+cat("Probabilidad de ganar para", defensa, ":", probganarvisitante * 100, "%", "y su cuota calculada es", 1/probganarvisitante, "\n")
+}
+
+# Llamar a la función para analizar varios partidos
+analizar_partido("m", "a", modelo)
+analizar_partido("", "", modelo)
+analizar_partido("Aston_Villa", "Everton", modelo)
 
